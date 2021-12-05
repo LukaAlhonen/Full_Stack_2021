@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
-const CountryD = (props) => (
-    <div>
-        <img src={props.country.flags.png} alt="Flag"/>
-    </div>
-)
-
 const Country = ({ name, region}) => (
   <div>
     {name} {region}
