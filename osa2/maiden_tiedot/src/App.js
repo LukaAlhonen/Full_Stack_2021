@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
-<<<<<<< HEAD
-const Country = ({ name, region}) => (
-  <div>
-    {name} {region}
-  </div>
-)
-=======
 const Country = ({ name }) => (
   <div>
     {name}
   </div>
 )
-/*
-
-*/
 
 const CountryDetails = ({ country }) => {
   const languages = Object.values(country.languages)
@@ -36,7 +26,6 @@ const CountryDetails = ({ country }) => {
   </div>
   )
 }
->>>>>>> master
 
 const Filter = (props) => {
   return (
@@ -49,10 +38,6 @@ const Filter = (props) => {
 const App = () => {
   const [ countries, setCountries] = useState([])
   const [ filter, setFilter ] = useState("")
-<<<<<<< HEAD
-  const [ retVal, setRetval ] = useState(<div></div>)
-=======
->>>>>>> master
 
   useEffect(() => {
     axios
@@ -63,11 +48,6 @@ const App = () => {
   }, [])
 
   const handleFilter = (event) => setFilter(event.target.value)
-<<<<<<< HEAD
-
-  const countriesToShow = countries.filter(
-    country => country.name.common.toLowerCase().includes(filter.toLowerCase())
-=======
   const getCountries = (cs) => {
     let retval = cs.map(country =>
       <Country key={countries.indexOf(country)} name={country.name.common} />
@@ -82,19 +62,12 @@ const App = () => {
 
   const countriesToShow = getCountries(countries.filter(
     country => country.name.common.toLowerCase().includes(filter.toLowerCase()))
->>>>>>> master
   )
 
   return(
     <div>
       <Filter filter={filter} handleFilter={handleFilter} />
-<<<<<<< HEAD
-      {countriesToShow.map(country =>
-        <Country key={countries.indexOf(country)} name={country.name.common} />
-      )}
-=======
       {countriesToShow}
->>>>>>> master
     </div>
   )
 }
