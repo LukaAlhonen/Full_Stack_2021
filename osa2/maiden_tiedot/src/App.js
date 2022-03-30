@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
-const Country = ({ name }) => (
-  <div>
-    {name}
-  </div>
-)
+const Country = ({ name, handleClick }) => {
+  const handleClick2 = () => handleClick(name)
+  return (
+    <div>
+      {name} <button onClick={handleClick2}>show</button>
+    </div>
+  )
+}
 
 const CountryDetails = ({ country }) => {
   const languages = Object.values(country.languages)
@@ -23,6 +26,7 @@ const CountryDetails = ({ country }) => {
       )}
     </ul>
     <img src={country.flags.png} alt="no flag"/>
+    <h3>Weather in {country.capital}</h3>
   </div>
   )
 }
@@ -50,14 +54,17 @@ const App = () => {
   const handleFilter = (event) => setFilter(event.target.value)
   const getCountries = (cs) => {
     let retval = cs.map(country =>
-      <Country key={countries.indexOf(country)} name={country.name.common} />
+      <Country key={countries.indexOf(country)} name={country.name.common} handleClick={handleClick}/>
     )
     if(cs.length > 10){
       retval = <div>Too many matches, specify another filter</div>
     } else if(cs.length === 1){
-      retval = <CountryDetails country={cs[0]} />
+      retval = <CountryDetails country={cs[0]} weather={weather}/>
     }
     return retval
+  }
+  const handleClick = (name) => {
+    setFilter(name)
   }
 
   const countriesToShow = getCountries(countries.filter(
