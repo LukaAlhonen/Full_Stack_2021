@@ -1,8 +1,9 @@
 const express = require('express')
 const app = express()
 
-app.use(express.json())
+app.use(express.json()) // Enable json parser
 
+// Hard coded list of persons
 let persons = [
   {
     "name": "Arto Hellas",
@@ -26,23 +27,22 @@ let persons = [
   }
 ]
 
+// Generate somewhat unique id
 const generateID = () => {
   const id = Math.floor(Math.random()*1000)
   return id
 }
 
-const nameExists = name => {
-  const names = persons.map(p => p.name)
-
-}
-
+// Serve raw json data of persons
 app.get('/api/persons', (req, res) => {
   res.json(persons)
 })
 
+// Serve specific person
 app.get('/api/persons/:id', (req, res) => {
-  const id = Number(req.params.id)
-  const person = persons.find(person => person.id === id)
+  const id = Number(req.params.id) // Get id from url
+  const person = persons.find(person => person.id === id) // Find requested person
+
   if(person){
     res.json(person)
   } else {
@@ -50,15 +50,18 @@ app.get('/api/persons/:id', (req, res) => {
   }
 })
 
+// Delete specific person
 app.delete('/api/persons/:id', (req, res) => {
   const id = Number(req.params.id)
   persons = persons.filter(person => person.id !== id)
   res.status(204).end()
 })
 
+// Add new person
 app.post('/api/persons/', (req, res) => {
   const body = req.body
 
+  // Check if name or number field is empty and make sure name is unique
   if(!body.name || !body.number){
     return res.status(400).json({
       error: 'name and or number missing'
@@ -79,6 +82,7 @@ app.post('/api/persons/', (req, res) => {
   res.json(person)
 })
 
+// Serve date and number of people in phonebook
 app.get('/info', (req, res) => {
   const date = new Date()
   const len = persons.length
