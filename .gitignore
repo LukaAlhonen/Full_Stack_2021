@@ -1,5 +1,2 @@
-**/public
-*.lock
-package.json
 README.md
 node_modules
